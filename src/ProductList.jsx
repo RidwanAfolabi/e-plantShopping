@@ -11,6 +11,14 @@ function ProductList({ onHomeClick }) {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
 
+    useEffect(() => {
+        const nextAdded = {};
+        cartItems.forEach(item => {
+            nextAdded[item.name] = true;
+        });
+        setAddedToCart(nextAdded);
+    }, [cartItems]);
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -259,8 +267,10 @@ function ProductList({ onHomeClick }) {
         setShowCart(false);
     };
     const handleAddToCart = (product) => {
+        if (addedToCart[product.name]) {
+            return;
+        }
         dispatch(addItem(product));
-        setAddedToCart(prev => ({ ...prev, [product.name]: true }));
     };
     const calculateTotalQuantity = () => {
         return cartItems
