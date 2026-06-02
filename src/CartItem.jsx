@@ -32,14 +32,15 @@ const handleCheckoutShopping = (e) => {
   };
 
   const handleDecrement = (item) => {
-    if (item.quantity > 1){
-        dispatch(updateQuantity({ name: item.name, quantitiy: item.quantity - 1}));
+    if (item.quantity > 1) {
+      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+      dispatch(removeItem(item.name));
     }
-    dispatch(removeItem({ name: item.name }));
-   
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item.name));
   };
 
   // Calculate total cost based on quantity for an item
